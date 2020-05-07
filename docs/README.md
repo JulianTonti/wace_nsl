@@ -23,8 +23,8 @@ The only file that's essential for a tree is the edges file, consisting of, at a
 
 # Managing different tree structures
 
-One way is simply to commit an indepent file of links (and new nodes if they are not hosted at NSL). 
+One way is simply to commit an independent file of links (and new nodes if they are not hosted at NSL). One tree, one file. 
 
 Another way is to create a branch in the repo and take the tree in your own direction within that branch. (Or fork the entire repo). Pull requests may be issued by tree editors to notify NSL that suggested changes to the APC are ready for review. 
 
-Another way, is to modify the node IDs to include an institutional prefix (IDs must be globally unique). Any number of participants may then make changes to the primary tree and filter edges by prefix:id to compile out specific trees as desired. 
+Another way, is to modify the node IDs in an edge file to include an institutional prefix. This ensures that keys are globally unique. Any number of participants may modify the same tree so long as they use the prefix:id format. By filtering edges based on the prefix, it is possible reconstruct different tree variants from the same source data.
