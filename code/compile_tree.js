@@ -79,9 +79,8 @@ function save_tree_json(ofile,root) {
     n.tag = n.rank + ':' + n.name;
   });
   traverse(root, (n) => {
-    let tag = n.rank + ':' + n.name;
-    stack[n.depth][tag] = {};
-    stack[n.depth+1] = stack[n.depth][tag];
+    stack[n.depth][n.tag] = {};
+    stack[n.depth+1] = stack[n.depth][n.tag];
   });
   save(ofile, JSON.stringify(stack[0],null,2));
 }
