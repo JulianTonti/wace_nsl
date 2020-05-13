@@ -5,7 +5,7 @@ A classification of taxa is a named tree structure consisting of:
 * nodes: ../data/census_tree_nodes.tsv
 * edges: ../data/census_tree_edges.tsv
 
-Each node is a Taxon that is included in the APC classfication. 
+Each node is a Taxon that is included in the APC classification. 
 Each edge is a link between a Taxon and a parent Taxon. 
 
 To rebuild these into a tree and export the data in a variety of other formats, go into the code directory and run 
@@ -27,4 +27,4 @@ One way is simply to commit an independent file of links (and new nodes if they 
 
 Another way is to create a branch in the repo and take the tree in your own direction within that branch. (Or fork the entire repo). Pull requests may be issued by tree editors to notify NSL that suggested changes to the APC are ready for review. 
 
-Another way, is to modify the node IDs in an edge file to include an institutional prefix. This ensures that keys are globally unique. Any number of participants may modify the same tree so long as they use the prefix:id format. By filtering edges based on the prefix, it is possible reconstruct different tree variants from the same source data.
+Another way, is to modify the node IDs in an edge file to include an institutional prefix. This ensures that keys are globally unique. Any number of participants may modify the same tree so long as they use the prefix:id format. By filtering edges based on the prefix, it is possible to reconstruct different tree variants from the same source data.
