@@ -55,7 +55,6 @@ function request_edges(id, cb)
   );
 }
 
-
 function render(root)
 {
   const duration = 500;
@@ -64,19 +63,11 @@ function render(root)
   let totalNodes = 0;
   let maxLabelLength = 0;
   let dfs_order = 0;
-  root.depth = 0;
-  root.path_length = root.name.length;
 
   traverse(root, node => {
     totalNodes += 1;
     node.dfs_order = dfs_order++;
-    maxLabelLength = Math.max(node.name.length, maxLabelLength);
-    if (node.children) node.children.forEach(child => {
-	  child.depth = node.depth + 1;
-	  child.path_length = node.path_length + child.name.length;
-    });
   });
-  maxLabelLength = 20;
 
   let viewerWidth = document.body.offsetWidth;
   let viewerHeight = document.body.offsetHeight;
@@ -131,7 +122,7 @@ function render(root)
     if (!node.loaded && !node.loading) {
       node.loading = true;
       request_node(node.name, data => {
-        node.taxon = `${data.metadata.rank}:${data.object}`;
+        node.label = `${data.metadata.rank}:${data.object}:${node.name}`;
         delete node._children;
         node.children = [];
 
@@ -168,9 +159,19 @@ function render(root)
     let nodes = tree.nodes(root);//.reverse();
     let links = tree.links(nodes);
 
+    function compute_labels(nodes)
+    {
+      maxLabelLength = 0;
+      for (let node of nodes) {
+        if (!node.label) node.label = (node.name + ':').repeat(3);
+        maxLabelLength = Math.max(node.label.length, maxLabelLength);
+      }
+    }
+    compute_labels(nodes);
+
     nodes.forEach(function(node) {
-	  //node.y = 10 * node.path_length;
-	  node.y = (node.depth * (maxLabelLength * 10));
+	    //node.y = 10 * node.path_length;
+	    node.y = (node.depth * (maxLabelLength * 10));
       //node.y = (node.depth * 500); //500px per level.
     });
     let node = (svgGroup
@@ -217,7 +218,7 @@ function render(root)
       .attr("text-anchor", function(d) {
         return d.children || d._children ? "end" : "start";
       })
-      .text(function(d) { return `${d.taxon}:${d.name}`; })
+      .text(function(d) { return d.label; })
     );
     (node
 	  .select("circle.nodeCircle")
@@ -315,7 +316,7 @@ function render(root)
       document.querySelector('#info_panel').innerText = JSON.stringify(data,null,2);
       let rank = data.response.metadata.rank;
       let name = data.response.object;
-      node.taxon = `${rank}:${name}`;
+      node.label = `${rank}:${name}:${node.name}`;
     }
     catch (e) {
       console.error(e);
