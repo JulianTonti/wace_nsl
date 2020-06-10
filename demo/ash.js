@@ -47,7 +47,7 @@ function request_edges(id, cb)
     .then(data => {
       if (data.success == false) throw data.message;
       document.querySelector('#info_panel').innerText = JSON.stringify(data,null,2);
-      cb(data.response.edges.out.taxonomic_parent_of);
+      cb(data.response.edges.out.taxonomic_parent_of || []);
     })
     .catch(e => {
       console.error(e);
