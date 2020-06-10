@@ -15,6 +15,7 @@ function main(ofile='ofile')
 
   // write the various output formats
   save_tree_json (ofile+'_tree.json', root);
+  save_tree_d3   (ofile+'_d3.json',root);
   save_table_tsv (ofile+'_rows_tree.tsv', root);
   save_table_json(ofile+'_rows_json.txt', root);
   save_flat_path (ofile+'_rows_flat.tsv', root);
@@ -76,11 +77,34 @@ function save(ofile,string) {
 function save_tree_json(ofile,root) {
   let stack = [{}];
   traverse(root, (n) => {
-    n.tag = n.rank + ':' + n.name;
+    n.tag = n.rank + ':' + n.name + ':' + n.id;
   });
   traverse(root, (n) => {
     stack[n.depth][n.tag] = {};
     stack[n.depth+1] = stack[n.depth][n.tag];
+  });
+  save(ofile, JSON.stringify(stack[0],null,2));
+}
+function save_tree_d3(ofile,root) {
+  let stack = [{}];
+  traverse(root, (n) => {
+    n.tag = n.rank + ':' + n.name + ':' + n.id;
+  });
+  traverse(root, (n) => {
+    let node = {
+      name : n.rank + ':' + n.name + ':' + n.id,
+      parent : null,
+      children : []
+    };
+    if (n.depth == 0) {
+      stack[0] = node;
+    }
+    else {
+      let parent = stack[n.depth-1];
+      node.parent = parent.name;
+      parent.children.push(node);
+      stack[n.depth] = node;
+    }
   });
   save(ofile, JSON.stringify(stack[0],null,2));
 }

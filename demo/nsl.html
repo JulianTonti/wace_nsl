@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+
+	.node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#EEE;
+  }
+
+  .nodeCircle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+	r:5px;
+  }
+  .node_circle_open {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+  .node_circle_closed {
+    fill: steelblue;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+  .nodeCircle:hover {
+	fill: red !important;
+	stroke: red;
+  }
+  .nodeText {
+    font-size:10px;
+    font-family:sans-serif;
+	font-weight:normal;
+  }
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+  body {
+    padding:0;
+    margin:0;
+    border:0;
+    /*overflow:hidden;*/
+    height:100vh;
+    width:100vw;
+    position:relative;
+  }
+  #tree-container {
+    display : block;
+    position : absolute;
+    width : 80vw;
+    height: 100vh;
+    top:0;
+    left:20vw;
+    padding:0;
+    margin:0;
+    border:0;
+  }
+  #info_panel {
+    display : block;
+    position : absolute;
+    width : 20vw;
+    height: 100vh;
+    top:0;
+    left:0;
+    padding:0;
+    margin:0;
+    border:0;
+    overflow:scroll;
+  }
+  #container {
+    display:block;
+    position:relative;
+  }
+
+</style>
+<!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<!-- normal script imports etc  -->
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="./nsl.js"></script>
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+</head>
+<body>
+    <div id='container'>
+    <pre id="info_panel"></pre>
+    <div id="tree-container"></div>
+    </div>
+    <script>
+    window.onload = function() {
+      d3.json('./file_d3.json', render);
+    }
+
+    </script>
+</body>
+</html>
